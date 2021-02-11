@@ -1,3 +1,9 @@
+// queue of cats to be displayed
+let displayQueue = [];
+
+// count of how many times the queue function has been called
+let queueCalled = 0;
+
 //these vars track how many photos have been "liked" that have the corresponding attribute
 var coatShortLiked = 0;
 var coatLongLiked = 0;
@@ -36,6 +42,54 @@ let tempCatArray;
 //click event listeners
 $(document).on("click", "#likeButton", likeHandler);
 $(document).on("click", "#dislikeButton", dislikeHandler);
+
+// randomizes the passed array using the Fisher Yates method
+const randomize = (arr) => {
+  for (let i = arr.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+};
+
+// calls appropriate function to add cats to the queue
+function queueCats() {
+  // want to show first 16 cats using the queueEight func to select cats from library
+  if (queueCalled < 2) {
+    queueStandardBlock();
+  }
+  // after the first 16, select additional cats based on user responses using queueRelevant func
+  else {
+    queueRelevantBlock();
+  }
+}
+
+// adds a block of semi-random cats to the queue - one of each color
+function queueStandardBlock() {
+  let colorInd = [];
+  for (let i = 0; i < catLibrary.length; i++) {
+    colorInd.push(i);
+  }
+  // randomize color order
+  randomize(colorInd);
+  // select cats
+  let newBlock = colorInd.map( (color, index) => {
+    // select an even distribution of ages and coat lengths
+    let age = index % 2;
+    let coat = Math.floor((index + 1) / 2) % 2;
+    // select random cat from those that possess the specified color / age / coat combination
+    let cat = Math.floor(Math.random() * catLibrary[color][age][coat].length);
+    return catLibrary[color][age][coat][cat];
+  });
+  // randomize cat list so that cats aren't presented in an apparent age / coat length pattern
+  randomize(newBlock);
+  console.log("Here's the selected cats");
+  console.log(newBlock);
+}
+
+// adds cats from categories the user has liked to the queue
+function queueRelevantBlock() {
+
+}
 
 //handler for like button click or swipe right
 function likeHandler() {
