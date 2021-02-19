@@ -6,7 +6,6 @@ let randomStockCat;
 let randomStockCatAge;
 let randomStockCatCoat;
 let randomStockCatColor;
-let randomStockCatBreed;
 let randomStockCatImage;
 
 // When user clicks the "Show me cats!" button...
@@ -20,8 +19,7 @@ $("#startButton").on("click", function() {
     "d-flex justify-content-center align-items-center"
   );
   $("#main-content-div").addClass("text-center");
-  // Populate random cat photo from cat-image-library.js, like and dislike buttons
-  randomNum = Math.floor(Math.random() * catLibrary.length);
-  randomStockCat = catLibrary[randomNum];
-  displayPhoto(randomStockCat);
+  // Display first cat in displayQueue
+  cat = displayQueue.shift();
+  displayPhoto();
 });
