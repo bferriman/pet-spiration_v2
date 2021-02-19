@@ -198,9 +198,9 @@ function likeHandler() {
   if (haveEnoughData()) {
     getGeolocation();
   } else {
-    //select a photo to show next and update DOM with new photo
-    tempCatArray = catLibrary;
-    getNextPhoto();
+    // display next cat in displayQueue
+    cat = displayQueue.shift();
+    displayPhoto();
   }
 }
 
@@ -208,56 +208,61 @@ function likeHandler() {
 function dislikeHandler() {
   //capture attributes of current image and store in variables
   //increment appropriate global attribute count tracking variables
-  if (randomStockCatColor === "Orange") {
+  if (cat.color === "Orange") {
     colorOrangeShown++;
   }
-  if (randomStockCatColor === "Black") {
+  if (cat.color === "Black") {
     colorBlackShown++;
   }
 
-  if (randomStockCatColor === "Gray") {
+  if (cat.color === "Gray") {
     colorGrayShown++;
   }
 
-  if (randomStockCatColor === "White") {
+  if (cat.color === "White") {
     colorWhiteShown++;
   }
 
-  if (randomStockCatColor === "Calico") {
+  if (cat.color === "Calico") {
     colorCalicoShown++;
   }
 
-  if (randomStockCatColor === "Tabby") {
+  if (cat.color === "Tabby") {
     colorTabbyShown++;
   }
 
-  if (randomStockCatBreed === "Siamese") {
+  if (cat.color === "Siamese") {
     colorSiameseShown++;
   }
 
-  if (randomStockCatBreed === "Persian") {
+  if (cat.color === "Persian") {
     colorPersianShown++;
   }
 
-  if (randomStockCatAge === "Kitten") {
+  if (cat.age === "Kitten") {
     ageKittenShown++;
   }
 
-  if (randomStockCatAge === "Adult") {
+  if (cat.age === "Adult") {
     ageAdultShown++;
   }
 
-  if (randomStockCatCoat === "Short Hair") {
+  if (cat.coat === "Short Hair") {
     coatShortShown++;
   }
 
-  if (randomStockCatCoat === "Long Hair") {
+  if (cat.coat === "Long Hair") {
     coatLongShown++;
   }
 
-  //select a photo to show next and update DOM with new photo
-  tempCatArray = catLibrary;
-  getNextPhoto();
+  //check whether we have sufficient data to proceed to cat select page
+  if (haveEnoughData()) {
+    getGeolocation();
+  } else {
+    // display next cat in displayQueue
+    cat = displayQueue.shift();
+    displayPhoto();
+  }
 }
 
 //evaluates the data we've gathered so far and returns true if we have enough data to move on to cat select, false if not
