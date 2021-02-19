@@ -14,4 +14,7 @@ $(document).ready(function() {
     // Un-hide main content
     $("#main-content").show();
   });
+
+  //queue first block of cats on page load
+  queueCats();
 });
