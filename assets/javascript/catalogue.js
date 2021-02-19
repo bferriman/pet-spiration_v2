@@ -1,40 +1,43 @@
 // queue of cats to be displayed
 let displayQueue = [];
 
+// currently displayed cat
+let cat;
+
 // count of how many times the queue function has been called
 let queueCalled = 0;
 
 //these vars track how many photos have been "liked" that have the corresponding attribute
-var coatShortLiked = 0;
-var coatLongLiked = 0;
+let coatShortLiked = 0;
+let coatLongLiked = 0;
 
-var ageKittenLiked = 0;
-var ageAdultLiked = 0;
+let ageKittenLiked = 0;
+let ageAdultLiked = 0;
 
-var colorOrangeLiked = 0;
-var colorBlackLiked = 0;
-var colorGrayLiked = 0;
-var colorWhiteLiked = 0;
-var colorCalicoLiked = 0;
-var colorTabbyLiked = 0;
-var colorSiameseLiked = 0;
-var colorPersianLiked = 0;
+let colorOrangeLiked = 0;
+let colorBlackLiked = 0;
+let colorGrayLiked = 0;
+let colorWhiteLiked = 0;
+let colorCalicoLiked = 0;
+let colorTabbyLiked = 0;
+let colorSiameseLiked = 0;
+let colorPersianLiked = 0;
 
 //these vars track how many photos have been shown that have the corresponding attribute
-var coatShortShown = 0;
-var coatLongShown = 0;
+let coatShortShown = 0;
+let coatLongShown = 0;
 
-var ageKittenShown = 0;
-var ageAdultShown = 0;
+let ageKittenShown = 0;
+let ageAdultShown = 0;
 
-var colorOrangeShown = 0;
-var colorBlackShown = 0;
-var colorGrayShown = 0;
-var colorWhiteShown = 0;
-var colorCalicoShown = 0;
-var colorTabbyShown = 0;
-var colorSiameseShown = 0;
-var colorPersianShown = 0;
+let colorOrangeShown = 0;
+let colorBlackShown = 0;
+let colorGrayShown = 0;
+let colorWhiteShown = 0;
+let colorCalicoShown = 0;
+let colorTabbyShown = 0;
+let colorSiameseShown = 0;
+let colorPersianShown = 0;
 
 // Create a variable in which to temporarily store the cat library so that it can be safely modified
 let tempCatArray;
@@ -55,6 +58,7 @@ const randomize = (arr) => {
 function queueCats() {
   // want to show first 16 cats using the queueEight func to select cats from library
   if (queueCalled < 2) {
+    queueCalled++;
     queueStandardBlock();
   }
   // after the first 16, select additional cats based on user responses using queueRelevant func
@@ -65,6 +69,7 @@ function queueCats() {
 
 // adds a block of semi-random cats to the queue - one of each color
 function queueStandardBlock() {
+  // create an array with each color index
   let colorInd = [];
   for (let i = 0; i < catLibrary.length; i++) {
     colorInd.push(i);
@@ -84,6 +89,8 @@ function queueStandardBlock() {
   randomize(newBlock);
   console.log("Here's the selected cats");
   console.log(newBlock);
+  // add new block to end of displayQueue
+  displayQueue.push(...newBlock);
 }
 
 // adds cats from categories the user has liked to the queue
@@ -94,7 +101,7 @@ function queueRelevantBlock() {
 //handler for like button click or swipe right
 function likeHandler() {
   //increment counts for attributes of current image
-  switch (randomStockCatAge) {
+  switch (cat.age) {
     case "Adult":
       ageAdultLiked++;
       ageAdultShown++;
@@ -109,7 +116,7 @@ function likeHandler() {
       console.log("Unexpected Age Value Encountered by Like Button Listener");
   }
 
-  switch (randomStockCatCoat) {
+  switch (cat.coat) {
     case "Short Hair":
       coatShortLiked++;
       coatShortShown++;
@@ -124,25 +131,25 @@ function likeHandler() {
       console.log("Unexpected Coat Value Encountered by Like Button Listener");
   }
 
-  switch (randomStockCatBreed) {
-    case "Siamese":
-      colorSiameseLiked++;
-      colorSiameseShown++;
-      break;
+  // switch (randomStockCatBreed) {
+  //   case "Siamese":
+  //     colorSiameseLiked++;
+  //     colorSiameseShown++;
+  //     break;
 
-    case "Persian":
-      colorPersianLiked++;
-      colorPersianShown++;
-      break;
+  //   case "Persian":
+  //     colorPersianLiked++;
+  //     colorPersianShown++;
+  //     break;
 
-    case undefined:
-      break;
+  //   case undefined:
+  //     break;
 
-    default:
-      console.log("Unexpected Breed Value Encountered by Like Button Listener");
-  }
+  //   default:
+  //     console.log("Unexpected Breed Value Encountered by Like Button Listener");
+  // }
 
-  switch (randomStockCatColor) {
+  switch (cat.color) {
     case "Orange":
       colorOrangeLiked++;
       colorOrangeShown++;
@@ -173,7 +180,14 @@ function likeHandler() {
       colorTabbyShown++;
       break;
 
-    case undefined:
+    case "Siamese":
+      colorSiameseLiked++;
+      colorSiameseShown++;
+      break;
+
+    case "Persian":
+      colorPersianLiked++;
+      colorPersianShown++;
       break;
 
     default:
@@ -446,25 +460,12 @@ function getNextPhoto() {
 }
 
 //updates DOM, replacing old photo with new photo passed to the function, and saving variables for the cat attributes
-function displayPhoto(cat) {
-  // Assign variables
-  randomStockCatImage = cat.image;
-  randomStockCatAge = cat.age;
-  randomStockCatBreed = cat.breed;
-  randomStockCatColor = cat.color;
-  randomStockCatCoat = cat.coat;
-  // Remove this cat from the cat library to avoid repeats
-  let indexToDelete = cat.index;
-  for (var i = 0; i < catLibrary.length; i++) {
-    if (catLibrary[i].index === indexToDelete) {
-      catLibrary.splice(i, 1);
-    }
-  }
+function displayPhoto() {
   // Clear the main content div
   $("#main-content-div").empty();
   // Append a div with id="catPhoto" and set that div's background image
   $("#main-content-div").append($('<div id="catPhoto"></div>'));
-  $("#catPhoto").css("background-image", "url(" + randomStockCatImage + ")");
+  $("#catPhoto").css("background-image", "url(" + cat.image + ")");
   //listen for swipes on photo and bind to handler functions
   $("#catPhoto")
     .hammer()
