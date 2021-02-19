@@ -427,13 +427,13 @@ const catLibrary = [
       [
         {
           age: "Kitten",
-          breed: "Siamese",
+          color: "Siamese",
           coat: "Long Hair",
           image: "./assets/images/long.siamese.kitten.jpg"
         },
         {
           age: "Kitten",
-          breed: "Siamese",
+          color: "Siamese",
           coat: "Long Hair",
           image: "./assets/images/long.siamese.kitten2.jpg"
         }
@@ -442,13 +442,13 @@ const catLibrary = [
       [
         {
           age: "Kitten",
-          breed: "Siamese",
+          color: "Siamese",
           coat: "Short Hair",
           image: "./assets/images/short.siamese.kitten.jpg"
         },
         {
           age: "Kitten",
-          breed: "Siamese",
+          color: "Siamese",
           coat: "Short Hair",
           image: "./assets/images/short.siamese.kitten2.jpg"
         }
@@ -460,19 +460,19 @@ const catLibrary = [
       [
         {
           age: "Adult",
-          breed: "Siamese",
+          color: "Siamese",
           coat: "Long Hair",
           image: "./assets/images/long.siamese.adult.jpg"
         },
         {
           age: "Adult",
-          breed: "Siamese",
+          color: "Siamese",
           coat: "Long Hair",
           image: "./assets/images/long.siamese.adult2.jpg"
         },
         {
           age: "Adult",
-          breed: "Siamese",
+          color: "Siamese",
           coat: "Long Hair",
           image: "./assets/images/long.siamese.adult3.jpg"
         }
@@ -481,13 +481,13 @@ const catLibrary = [
       [
         {
           age: "Adult",
-          breed: "Siamese",
+          color: "Siamese",
           coat: "Short Hair",
           image: "./assets/images/short.siamese.adult.jpg"
         },
         {
           age: "Adult",
-          breed: "Siamese",
+          color: "Siamese",
           coat: "Short Hair",
           image: "./assets/images/short.siamese.adult2.jpg"
         }
@@ -502,13 +502,13 @@ const catLibrary = [
       [
         {
           age: "Kitten",
-          breed: "Persian",
+          color: "Persian",
           coat: "Long Hair",
           image: "./assets/images/long.persian.kitten.jpg"
         },
         {
           age: "Kitten",
-          breed: "Persian",
+          color: "Persian",
           coat: "Long Hair",
           image: "./assets/images/long.persian.kitten2.jpg"
         }
@@ -517,13 +517,13 @@ const catLibrary = [
       [
         {
           age: "Kitten",
-          breed: "Persian",
+          color: "Persian",
           coat: "Short Hair",
           image: "./assets/images/short.persian.kitten.jpg"
         },
         {
           age: "Kitten",
-          breed: "Persian",
+          color: "Persian",
           coat: "Short Hair",
           image: "./assets/images/short.persian.kitten2.jpg"
         }
@@ -535,13 +535,13 @@ const catLibrary = [
       [
         {
           age: "Adult",
-          breed: "Persian",
+          color: "Persian",
           coat: "Long Hair",
           image: "./assets/images/long.persian.adult.jpg"
         },
         {
           age: "Adult",
-          breed: "Persian",
+          color: "Persian",
           coat: "Long Hair",
           image: "./assets/images/long.persian.adult2.jpg"
         }
@@ -550,13 +550,13 @@ const catLibrary = [
       [
         {
           age: "Adult",
-          breed: "Persian",
+          color: "Persian",
           coat: "Short Hair",
           image: "./assets/images/short.persian.adult.jpg"
         },
         {
           age: "Adult",
-          breed: "Persian",
+          color: "Persian",
           coat: "Short Hair",
           image: "./assets/images/short.persian.adult2.jpg"
         }
