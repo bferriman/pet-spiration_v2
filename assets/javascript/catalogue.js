@@ -55,15 +55,21 @@ const randomize = (arr) => {
 };
 
 // calls appropriate function to add cats to the queue
-function queueCats() {
-  // want to show first 16 cats using the queueEight func to select cats from library
-  if (queueCalled < 2) {
+function handleEmptyQueue() {
+  // want to show first 16 cats using the queueStandardBlock func to select cats from library
+  if (queueCalled === 0) {
     queueCalled++;
     queueStandardBlock();
+    advance();
   }
-  // after the first 16, select additional cats based on user responses using queueRelevant func
-  else {
+  // after the first 16, select additional cats based on user responses using queueRelevantBlock func
+  else if (queueCalled === 1) {
+    queueCalled++;
     queueRelevantBlock();
+    advance();
+  }
+  else {
+    getGeolocation();
   }
 }
 
@@ -95,7 +101,7 @@ function queueStandardBlock() {
 
 // adds cats from categories the user has liked to the queue
 function queueRelevantBlock() {
-
+  console.log("We're in the queueRelevantBlock function!");
 }
 
 //handler for like button click or swipe right
@@ -194,14 +200,7 @@ function likeHandler() {
       console.log("Unexpected Color Value Encountered by Like Button Listener");
   }
 
-  //check whether we have sufficient data to proceed to cat select page
-  if (haveEnoughData()) {
-    getGeolocation();
-  } else {
-    // display next cat in displayQueue
-    cat = displayQueue.shift();
-    displayPhoto();
-  }
+  advance();
 }
 
 //handler for dislike button click or swipe left
@@ -255,14 +254,7 @@ function dislikeHandler() {
     coatLongShown++;
   }
 
-  //check whether we have sufficient data to proceed to cat select page
-  if (haveEnoughData()) {
-    getGeolocation();
-  } else {
-    // display next cat in displayQueue
-    cat = displayQueue.shift();
-    displayPhoto();
-  }
+  advance();
 }
 
 //evaluates the data we've gathered so far and returns true if we have enough data to move on to cat select, false if not
@@ -462,6 +454,18 @@ function getNextPhoto() {
   }
   // If the randomly selected cat passes all of the above criteria, update the photo and save cat attribute variables
   displayPhoto(randomStockCat);
+}
+
+function advance() {  
+  // Queue up some cats if queue is empty
+  if (displayQueue.length === 0) {
+    handleEmptyQueue();
+  }
+  else {
+    // display next cat in queue
+    cat = displayQueue.shift();
+    displayPhoto();
+  }
 }
 
 //updates DOM, replacing old photo with new photo passed to the function, and saving variables for the cat attributes

@@ -19,7 +19,7 @@ $("#startButton").on("click", function() {
     "d-flex justify-content-center align-items-center"
   );
   $("#main-content-div").addClass("text-center");
-  // Display first cat in displayQueue
-  cat = displayQueue.shift();
-  displayPhoto();
+
+  // Proceed to cats...
+  advance();
 });
