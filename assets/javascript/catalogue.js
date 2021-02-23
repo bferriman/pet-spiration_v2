@@ -82,14 +82,27 @@ function queueStandardBlock() {
   }
   // randomize color order
   randomize(colorInd);
-  // select cats
-  let newBlock = colorInd.map( (color, index) => {
-    // select an even distribution of ages and coat lengths
-    let age = index % 2;
-    let coat = Math.floor((index + 1) / 2) % 2;
-    // select random cat from those that possess the specified color / age / coat combination
-    let cat = Math.floor(Math.random() * catLibrary[color][age][coat].length);
-    return catLibrary[color][age][coat][cat];
+  // select two cats of each color
+  let newBlock = [];
+  colorInd.forEach( (color, index) => {
+    let catInd;
+    let cat;
+    if (index % 2 === 0) {  // half the colors will show long coat kitten and short coat adult
+      catInd = Math.floor(Math.random() * catLibrary[color][0][0].length);
+      cat = catLibrary[color][0][0].splice(catInd, 1);
+      newBlock.push(cat[0]);
+      catInd = Math.floor(Math.random() * catLibrary[color][1][1].length);
+      cat = catLibrary[color][1][1].splice(catInd, 1);
+      newBlock.push(cat[0]);
+    }
+    else {  // other half of colors will show short coat kitten and long coat adult
+      catInd = Math.floor(Math.random() * catLibrary[color][0][1].length);
+      cat = catLibrary[color][0][1].splice(catInd, 1);
+      newBlock.push(cat[0]);
+      catInd = Math.floor(Math.random() * catLibrary[color][1][0].length);
+      cat = catLibrary[color][1][0].splice(catInd, 1);
+      newBlock.push(cat[0]);
+    }
   });
   // randomize cat list so that cats aren't presented in an apparent age / coat length pattern
   randomize(newBlock);
