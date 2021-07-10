@@ -115,6 +115,18 @@ function queueStandardBlock() {
 // adds cats from categories the user has liked to the queue
 function queueRelevantBlock() {
   console.log("We're in the queueRelevantBlock function!");
+  console.log("Kittens Liked: " + ageKittenLiked);
+  console.log("Adults Liked: " + ageAdultLiked);
+  console.log("Long Coat Liked: " + coatLongLiked);
+  console.log("Short Coat Liked: " + coatShortLiked);
+  console.log("Orange Cats Liked: " + colorOrangeLiked);
+  console.log("Black Cats Liked: " + colorBlackLiked);
+  console.log("Gray Cats Liked: " + colorGrayLiked);
+  console.log("White Cats Liked: " + colorWhiteLiked);
+  console.log("Tabby Cats Liked: " + colorTabbyLiked);
+  console.log("Calico Cats Liked: " + colorCalicoLiked);
+  console.log("Siamese Cats Liked: " + colorSiameseLiked);
+  console.log("Persian Cats Liked: " + colorPersianLiked);
 }
 
 //handler for like button click or swipe right
