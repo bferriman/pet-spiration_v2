@@ -67,35 +67,35 @@ function handleEmptyQueue() {
     queueCalled++;
     queueRelevantBlock();
     advance();
-  }
-  else {
+  } else {
     getGeolocation();
   }
 }
 
-// adds a block of semi-random cats to the queue - one of each color
+// adds a block of semi-random cats to the queue - two of each color
 function queueStandardBlock() {
   // create an array with each color index
   let colorInd = [];
   for (let i = 0; i < catLibrary.length; i++) {
     colorInd.push(i);
   }
-  // randomize color order
+  // randomize color order so that a color doesn't always get the same coat / age combo below
   randomize(colorInd);
   // select two cats of each color
   let newBlock = [];
-  colorInd.forEach( (color, index) => {
+  colorInd.forEach((color, index) => {
     let catInd;
     let cat;
-    if (index % 2 === 0) {  // half the colors will show long coat kitten and short coat adult
+    if (index % 2 === 0) {
+      // half the colors will show long coat kitten and short coat adult
       catInd = Math.floor(Math.random() * catLibrary[color][0][0].length);
       cat = catLibrary[color][0][0].splice(catInd, 1);
       newBlock.push(cat[0]);
       catInd = Math.floor(Math.random() * catLibrary[color][1][1].length);
       cat = catLibrary[color][1][1].splice(catInd, 1);
       newBlock.push(cat[0]);
-    }
-    else {  // other half of colors will show short coat kitten and long coat adult
+    } else {
+      // other half of colors will show short coat kitten and long coat adult
       catInd = Math.floor(Math.random() * catLibrary[color][0][1].length);
       cat = catLibrary[color][0][1].splice(catInd, 1);
       newBlock.push(cat[0]);
@@ -161,24 +161,6 @@ function likeHandler() {
     default:
       console.log("Unexpected Coat Value Encountered by Like Button Listener");
   }
-
-  // switch (randomStockCatBreed) {
-  //   case "Siamese":
-  //     colorSiameseLiked++;
-  //     colorSiameseShown++;
-  //     break;
-
-  //   case "Persian":
-  //     colorPersianLiked++;
-  //     colorPersianShown++;
-  //     break;
-
-  //   case undefined:
-  //     break;
-
-  //   default:
-  //     console.log("Unexpected Breed Value Encountered by Like Button Listener");
-  // }
 
   switch (cat.color) {
     case "Orange":
@@ -327,7 +309,7 @@ function getNextPhoto() {
     let refreshButton = $("<button>");
     refreshButton.addClass("refresh-button");
     refreshButton.text("Try Again");
-    refreshButton.on("click", function() {
+    refreshButton.on("click", function () {
       location.reload(true);
     });
     newErrorModal.append(refreshButton);
@@ -481,12 +463,11 @@ function getNextPhoto() {
   displayPhoto(randomStockCat);
 }
 
-function advance() {  
+function advance() {
   // Queue up some cats if queue is empty
   if (displayQueue.length === 0) {
     handleEmptyQueue();
-  }
-  else {
+  } else {
     // display next cat in queue
     cat = displayQueue.shift();
     displayPhoto();
@@ -501,12 +482,8 @@ function displayPhoto() {
   $("#main-content-div").append($('<div id="catPhoto"></div>'));
   $("#catPhoto").css("background-image", "url(" + cat.image + ")");
   //listen for swipes on photo and bind to handler functions
-  $("#catPhoto")
-    .hammer()
-    .bind("swipeleft", dislikeHandler);
-  $("#catPhoto")
-    .hammer()
-    .bind("swiperight", likeHandler);
+  $("#catPhoto").hammer().bind("swipeleft", dislikeHandler);
+  $("#catPhoto").hammer().bind("swiperight", likeHandler);
   // Append like/dislike buttons
   $("#main-content-div").append(
     $(`<button class="thumb-button" id="likeButton">
