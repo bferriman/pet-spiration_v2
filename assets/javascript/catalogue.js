@@ -7,22 +7,6 @@ let cat;
 // count of how many times the queue function has been called
 let queueCalled = 0;
 
-//these vars track how many photos have been "liked" that have the corresponding attribute
-let coatShortLiked = 0;
-let coatLongLiked = 0;
-
-let ageKittenLiked = 0;
-let ageAdultLiked = 0;
-
-let colorOrangeLiked = 0;
-let colorBlackLiked = 0;
-let colorGrayLiked = 0;
-let colorWhiteLiked = 0;
-let colorCalicoLiked = 0;
-let colorTabbyLiked = 0;
-let colorSiameseLiked = 0;
-let colorPersianLiked = 0;
-
 let likeCounts = {
   coat: {
     short: 0,
