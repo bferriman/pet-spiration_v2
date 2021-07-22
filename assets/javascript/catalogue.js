@@ -23,21 +23,26 @@ let colorTabbyLiked = 0;
 let colorSiameseLiked = 0;
 let colorPersianLiked = 0;
 
-//these vars track how many photos have been shown that have the corresponding attribute
-let coatShortShown = 0;
-let coatLongShown = 0;
-
-let ageKittenShown = 0;
-let ageAdultShown = 0;
-
-let colorOrangeShown = 0;
-let colorBlackShown = 0;
-let colorGrayShown = 0;
-let colorWhiteShown = 0;
-let colorCalicoShown = 0;
-let colorTabbyShown = 0;
-let colorSiameseShown = 0;
-let colorPersianShown = 0;
+let likeCounts = {
+  coat: {
+    short: 0,
+    long: 0
+  },
+  age: {
+    kitten: 0,
+    adult: 0
+  },
+  color: {
+    orange: 0,
+    black: 0,
+    gray: 0,
+    white: 0,
+    calico: 0,
+    tabby: 0,
+    siamese: 0,
+    persian: 0
+  }
+};
 
 // Create a variable in which to temporarily store the cat library so that it can be safely modified
 let tempCatArray;
@@ -68,6 +73,7 @@ function handleEmptyQueue() {
     queueRelevantBlock();
     advance();
   } else {
+    //done showing cats, proceed to getting geo location and cat API search
     getGeolocation();
   }
 }
@@ -112,34 +118,67 @@ function queueStandardBlock() {
   displayQueue.push(...newBlock);
 }
 
+function agePreferred() {
+  if (likeCounts.age.kitten > likeCounts.age.adult) {
+    return "kitten";
+  } else if (likeCounts.age.adult > likeCounts.age.kitten) {
+    return "adult";
+  } else {
+    //equal
+    return "neither";
+  }
+}
+
+function coatPreferred() {
+  if (likeCounts.coat.long > likeCounts.coat.short) {
+    return "long";
+  } else if (likeCounts.coat.short > likeCounts.coat.long) {
+    return "short";
+  } else {
+    //equal
+    return "neither";
+  }
+}
+
+function colorsPreferred() {
+  const colors = [];
+}
+
 // adds cats from categories the user has liked to the queue
 function queueRelevantBlock() {
   console.log("We're in the queueRelevantBlock function!");
-  console.log("Kittens Liked: " + ageKittenLiked);
-  console.log("Adults Liked: " + ageAdultLiked);
-  console.log("Long Coat Liked: " + coatLongLiked);
-  console.log("Short Coat Liked: " + coatShortLiked);
-  console.log("Orange Cats Liked: " + colorOrangeLiked);
-  console.log("Black Cats Liked: " + colorBlackLiked);
-  console.log("Gray Cats Liked: " + colorGrayLiked);
-  console.log("White Cats Liked: " + colorWhiteLiked);
-  console.log("Tabby Cats Liked: " + colorTabbyLiked);
-  console.log("Calico Cats Liked: " + colorCalicoLiked);
-  console.log("Siamese Cats Liked: " + colorSiameseLiked);
-  console.log("Persian Cats Liked: " + colorPersianLiked);
+  console.log("Kittens Liked: " + likeCounts.age.kitten);
+  console.log("Adults Liked: " + likeCounts.age.adult);
+  console.log("Long Coat Liked: " + likeCounts.coat.long);
+  console.log("Short Coat Liked: " + likeCounts.coat.short);
+  console.log("Orange Cats Liked: " + likeCounts.color.orange);
+  console.log("Black Cats Liked: " + likeCounts.color.black);
+  console.log("Gray Cats Liked: " + likeCounts.color.gray);
+  console.log("White Cats Liked: " + likeCounts.color.white);
+  console.log("Tabby Cats Liked: " + likeCounts.color.tabby);
+  console.log("Calico Cats Liked: " + likeCounts.color.calico);
+  console.log("Siamese Cats Liked: " + likeCounts.color.siamese);
+  console.log("Persian Cats Liked: " + likeCounts.color.persian);
+}
+
+function likeHandler() {
+  likeCounts.age[cat.age]++;
+  likeCounts.coat[cat.coat]++;
+  likeCounts.color[cat.color]++;
+  advance();
 }
 
 //handler for like button click or swipe right
-function likeHandler() {
+function oldLikeHandler() {
   //increment counts for attributes of current image
   switch (cat.age) {
     case "Adult":
-      ageAdultLiked++;
+      likeCounts.age.adult++;
       ageAdultShown++;
       break;
 
     case "Kitten":
-      ageKittenLiked++;
+      likeCounts.age.kitten++;
       ageKittenShown++;
       break;
 
@@ -149,12 +188,12 @@ function likeHandler() {
 
   switch (cat.coat) {
     case "Short Hair":
-      coatShortLiked++;
+      likeCounts.coat.short++;
       coatShortShown++;
       break;
 
     case "Long Hair":
-      coatLongLiked++;
+      likeCounts.coat.long++;
       coatLongShown++;
       break;
 
@@ -164,42 +203,42 @@ function likeHandler() {
 
   switch (cat.color) {
     case "Orange":
-      colorOrangeLiked++;
+      likeCounts.color.orange++;
       colorOrangeShown++;
       break;
 
     case "Black":
-      colorBlackLiked++;
+      likeCounts.color.black++;
       colorBlackShown++;
       break;
 
     case "Gray":
-      colorGrayLiked++;
+      likeCounts.color.gray++;
       colorGrayShown++;
       break;
 
     case "White":
-      colorWhiteLiked++;
+      likeCounts.color.white++;
       colorWhiteShown++;
       break;
 
     case "Calico":
-      colorCalicoLiked++;
+      likeCounts.color.calico++;
       colorCalicoShown++;
       break;
 
     case "Tabby":
-      colorTabbyLiked++;
+      likeCounts.color.tabby++;
       colorTabbyShown++;
       break;
 
     case "Siamese":
-      colorSiameseLiked++;
+      likeCounts.color.siamese++;
       colorSiameseShown++;
       break;
 
     case "Persian":
-      colorPersianLiked++;
+      likeCounts.color.persian++;
       colorPersianShown++;
       break;
 
