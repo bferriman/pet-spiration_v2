@@ -49,7 +49,7 @@ let tempCatArray;
 
 //click event listeners
 $(document).on("click", "#likeButton", likeHandler);
-$(document).on("click", "#dislikeButton", dislikeHandler);
+$(document).on("click", "#dislikeButton", advance);
 
 // randomizes the passed array using the Fisher Yates method
 const randomize = (arr) => {
@@ -166,161 +166,6 @@ function likeHandler() {
   likeCounts.coat[cat.coat]++;
   likeCounts.color[cat.color]++;
   advance();
-}
-
-//handler for like button click or swipe right
-function oldLikeHandler() {
-  //increment counts for attributes of current image
-  switch (cat.age) {
-    case "Adult":
-      likeCounts.age.adult++;
-      ageAdultShown++;
-      break;
-
-    case "Kitten":
-      likeCounts.age.kitten++;
-      ageKittenShown++;
-      break;
-
-    default:
-      console.log("Unexpected Age Value Encountered by Like Button Listener");
-  }
-
-  switch (cat.coat) {
-    case "Short Hair":
-      likeCounts.coat.short++;
-      coatShortShown++;
-      break;
-
-    case "Long Hair":
-      likeCounts.coat.long++;
-      coatLongShown++;
-      break;
-
-    default:
-      console.log("Unexpected Coat Value Encountered by Like Button Listener");
-  }
-
-  switch (cat.color) {
-    case "Orange":
-      likeCounts.color.orange++;
-      colorOrangeShown++;
-      break;
-
-    case "Black":
-      likeCounts.color.black++;
-      colorBlackShown++;
-      break;
-
-    case "Gray":
-      likeCounts.color.gray++;
-      colorGrayShown++;
-      break;
-
-    case "White":
-      likeCounts.color.white++;
-      colorWhiteShown++;
-      break;
-
-    case "Calico":
-      likeCounts.color.calico++;
-      colorCalicoShown++;
-      break;
-
-    case "Tabby":
-      likeCounts.color.tabby++;
-      colorTabbyShown++;
-      break;
-
-    case "Siamese":
-      likeCounts.color.siamese++;
-      colorSiameseShown++;
-      break;
-
-    case "Persian":
-      likeCounts.color.persian++;
-      colorPersianShown++;
-      break;
-
-    default:
-      console.log("Unexpected Color Value Encountered by Like Button Listener");
-  }
-
-  advance();
-}
-
-//handler for dislike button click or swipe left
-function dislikeHandler() {
-  //capture attributes of current image and store in variables
-  //increment appropriate global attribute count tracking variables
-  if (cat.color === "Orange") {
-    colorOrangeShown++;
-  }
-  if (cat.color === "Black") {
-    colorBlackShown++;
-  }
-
-  if (cat.color === "Gray") {
-    colorGrayShown++;
-  }
-
-  if (cat.color === "White") {
-    colorWhiteShown++;
-  }
-
-  if (cat.color === "Calico") {
-    colorCalicoShown++;
-  }
-
-  if (cat.color === "Tabby") {
-    colorTabbyShown++;
-  }
-
-  if (cat.color === "Siamese") {
-    colorSiameseShown++;
-  }
-
-  if (cat.color === "Persian") {
-    colorPersianShown++;
-  }
-
-  if (cat.age === "Kitten") {
-    ageKittenShown++;
-  }
-
-  if (cat.age === "Adult") {
-    ageAdultShown++;
-  }
-
-  if (cat.coat === "Short Hair") {
-    coatShortShown++;
-  }
-
-  if (cat.coat === "Long Hair") {
-    coatLongShown++;
-  }
-
-  advance();
-}
-
-//evaluates the data we've gathered so far and returns true if we have enough data to move on to cat select, false if not
-function haveEnoughData() {
-  if (
-    (coatShortLiked >= 2 || coatLongLiked >= 2) &&
-    (ageKittenLiked >= 2 || ageAdultLiked >= 2) &&
-    (colorOrangeLiked >= 2 ||
-      colorBlackLiked >= 2 ||
-      colorGrayLiked >= 2 ||
-      colorWhiteLiked >= 2 ||
-      colorCalicoLiked >= 2 ||
-      colorTabbyLiked >= 2 ||
-      colorSiameseLiked >= 2 ||
-      colorPersianLiked >= 2)
-  ) {
-    return true;
-  } else {
-    return false;
-  }
 }
 
 //build an algorithm to select a next photo based on what attributes we need more data for.
@@ -521,7 +366,7 @@ function displayPhoto() {
   $("#main-content-div").append($('<div id="catPhoto"></div>'));
   $("#catPhoto").css("background-image", "url(" + cat.image + ")");
   //listen for swipes on photo and bind to handler functions
-  $("#catPhoto").hammer().bind("swipeleft", dislikeHandler);
+  $("#catPhoto").hammer().bind("swipeleft", advance);
   $("#catPhoto").hammer().bind("swiperight", likeHandler);
   // Append like/dislike buttons
   $("#main-content-div").append(
