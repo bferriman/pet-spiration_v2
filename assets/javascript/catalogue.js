@@ -125,7 +125,18 @@ function coatPreferred() {
 }
 
 function colorsPreferred() {
-  const colors = [];
+  let preferredColors = [];
+  let currentMax = 0;
+  for (const color in likeCounts.color) {
+    let count = likeCounts.color[color];
+    if (count > currentMax) {
+      currentMax = count;
+      preferredColors = [color];
+    } else if (count === currentMax) {
+      preferredColors.push(color);
+    }
+  }
+  return preferredColors;
 }
 
 // adds cats from categories the user has liked to the queue
