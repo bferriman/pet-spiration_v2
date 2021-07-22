@@ -1,5 +1,5 @@
-var PetfinderAPIKey = "WdIiOOJyE03Hnp7raZfKwVZbInn5Nb7ZIQISdDaCo3aclUJHDj";
-var PetfinderAPISecret = "SgOkPoh9MPc11jYtWQp3ukO1tcpFH0fAz5U3UbBn";
+var PetfinderAPIKey = "OTKmTK2SiaFe8Balw0E5ZMd9NUQn1uYeBgaIxSfyDA07UeascA";
+var PetfinderAPISecret = "bJdl9XOj88Jl8pRCfMnylD8bYTswVZ59314MFL2X";
 
 function getGeolocation() {
   this.navigator.geolocation.getCurrentPosition(
@@ -11,11 +11,10 @@ function getGeolocation() {
 var Latlong;
 
 function onGeolocateSuccess(coordinates) {
-
   Latlong = {
     latitude: coordinates.coords.latitude,
     longitude: coordinates.coords.longitude
-  }
+  };
 
   const { latitude, longitude } = coordinates.coords;
   searchForCats(latitude, longitude);
@@ -35,9 +34,9 @@ function onGeolocateError(error) {
   Latlong = {
     latitude: null,
     longitude: null
-  }
+  };
 
-  searchForCats(35.7963914, -78.7044064);  //default coordinates
+  searchForCats(35.7963914, -78.7044064); //default coordinates
 }
 
 //called once we have enough data; determine search parameters and make API call
@@ -53,25 +52,25 @@ function searchForCats(lat, lng) {
     url: queryURL,
     method: "POST",
     data: queryData
-  }).then(function(response) {
+  }).then(function (response) {
     var token = response.access_token;
 
     var requestHeader = "Bearer " + token;
     queryURL = "https://api.petfinder.com/v2/animals";
 
     var coatQuery = "";
-    if (coatShortLiked >= coatLongLiked) {
+    if (likeCounts.coat.short >= likeCounts.coat.long) {
       coatQuery += "&coat=short";
     }
-    if (coatLongLiked >= coatShortLiked) {
+    if (likeCounts.coat.long >= likeCounts.coat.short) {
       coatQuery += "&coat=medium,long";
     }
 
     var ageQuery = "";
-    if (ageKittenLiked >= ageAdultLiked) {
+    if (likeCounts.age.kitten >= likeCounts.age.adult) {
       ageQuery += "&age=baby,young";
     }
-    if (ageAdultLiked >= ageKittenLiked) {
+    if (likeCounts.age.adult >= likeCounts.age.kitten) {
       ageQuery += "&age=adult,senior";
     }
 
@@ -79,63 +78,63 @@ function searchForCats(lat, lng) {
     var currentMax = 0;
 
     //orange
-    if (colorOrangeLiked > currentMax) {
-      currentMax = colorOrangeLiked;
+    if (likeCounts.color.orange > currentMax) {
+      currentMax = likeCounts.color.orange;
       colorQuery = "&color=Orange+%26+White,Orange+%2F+Red";
-    } else if (colorOrangeLiked === currentMax) {
+    } else if (likeCounts.color.orange === currentMax) {
       colorQuery += "&color=Orange+%26+White,Orange+%2F+Red";
     }
     //black
-    if (colorBlackLiked > currentMax) {
-      currentMax = colorBlackLiked;
+    if (likeCounts.color.black > currentMax) {
+      currentMax = likeCounts.color.black;
       colorQuery = "&color=Black";
-    } else if (colorBlackLiked === currentMax) {
+    } else if (likeCounts.color.black === currentMax) {
       colorQuery += "&color=Black";
     }
     //gray
-    if (colorGrayLiked > currentMax) {
-      currentMax = colorGrayLiked;
+    if (likeCounts.color.gray > currentMax) {
+      currentMax = likeCounts.color.gray;
       colorQuery =
         "&color=Gray+%2F+Blue+%2F+Silver,Smoke,Tabby+%28Gray+%2F+Blue+%2F+Silver%29";
-    } else if (colorGrayLiked === currentMax) {
+    } else if (likeCounts.color.gray === currentMax) {
       colorQuery +=
         "&color=Gray+%2F+Blue+%2F+Silver,Smoke,Tabby+%28Gray+%2F+Blue+%2F+Silver%29";
     }
     //white
-    if (colorWhiteLiked > currentMax) {
-      currentMax = colorWhiteLiked;
+    if (likeCounts.color.white > currentMax) {
+      currentMax = likeCounts.color.white;
       colorQuery = "&color=Cream+%2F+Ivory,White";
-    } else if (colorWhiteLiked === currentMax) {
+    } else if (likeCounts.color.white === currentMax) {
       colorQuery += "&color=Cream+%2F+Ivory,White";
     }
     //calico
-    if (colorCalicoLiked > currentMax) {
-      currentMax = colorCalicoLiked;
+    if (likeCounts.color.calico > currentMax) {
+      currentMax = likeCounts.color.calico;
       colorQuery = "&color=Calico,Dilute+Calico";
-    } else if (colorCalicoLiked === currentMax) {
+    } else if (likeCounts.color.calico === currentMax) {
       colorQuery += "&color=Calico,Dilute+Calico";
     }
     //tabby
-    if (colorTabbyLiked > currentMax) {
-      currentMax = colorTabbyLiked;
+    if (likeCounts.color.tabby > currentMax) {
+      currentMax = likeCounts.color.tabby;
       colorQuery =
         "&color=Tabby+%28Brown+%2F+Chocolate%29,Tabby+%28Buff+%2F+Tan+%2F+Fawn%29,Tabby+%28Gray+%2F+Blue+%2F+Silver%29,Tabby+%28Leopard+%2F+Spotted%29,Tabby+%28Orange+%2F+Red%29,Tabby+%28Tiger+Striped%29,Torbie";
-    } else if (colorTabbyLiked === currentMax) {
+    } else if (likeCounts.color.tabby === currentMax) {
       colorQuery +=
         "&color=Tabby+%28Brown+%2F+Chocolate%29,Tabby+%28Buff+%2F+Tan+%2F+Fawn%29,Tabby+%28Gray+%2F+Blue+%2F+Silver%29,Tabby+%28Leopard+%2F+Spotted%29,Tabby+%28Orange+%2F+Red%29,Tabby+%28Tiger+Striped%29,Torbie";
     }
     //siamese
-    if (colorSiameseLiked > currentMax) {
-      currentMax = colorSiameseLiked;
+    if (likeCounts.color.siamese > currentMax) {
+      currentMax = likeCounts.color.siamese;
       colorQuery = "&breed=Siamese,Applehead+Siamese,Balinese";
-    } else if (colorSiameseLiked === currentMax) {
+    } else if (likeCounts.color.siamese === currentMax) {
       colorQuery += "&breed=Siamese,Applehead+Siamese,Balinese";
     }
     //persian
-    if (colorPersianLiked > currentMax) {
-      currentMax = colorPersianLiked;
+    if (likeCounts.color.persian > currentMax) {
+      currentMax = likeCounts.color.persian;
       colorQuery = "&breed=Persian,Himalayan";
-    } else if (colorPersianLiked === currentMax) {
+    } else if (likeCounts.color.persian === currentMax) {
       colorQuery += "&breed=Persian,Himalayan";
     }
 
@@ -152,13 +151,16 @@ function searchForCats(lat, lng) {
       locationQuery +
       "&limit=25";
 
+    console.log("Query Parameters: " + queryParameters);
+
     $.ajax({
       url: queryURL + queryParameters,
       method: "GET",
       headers: {
         Authorization: requestHeader
       }
-    }).then(function(response) {
+    }).then(function (response) {
+      console.log("Cat search success: " + response.animals);
       buildPetSelectPage(response);
     });
   });
@@ -196,14 +198,14 @@ function buildPetSelectPage(response) {
   var builtCount = 0;
   var streetAdd = "";
   for (var i = 0; i < response.animals.length && builtCount < 5; i++) {
-
     streetAdd = response.animals[i].contact.address.address1;
 
     if (streetAdd !== null) {
-      if(
-      streetAdd.search("PO B") === -1 &&
-      streetAdd.search("P.O.") === -1 &&
-      streetAdd.search("@") === -1){
+      if (
+        streetAdd.search("PO B") === -1 &&
+        streetAdd.search("P.O.") === -1 &&
+        streetAdd.search("@") === -1
+      ) {
         petDisplayDiv.append(buildPetResultDiv(response.animals[i]));
         builtCount++;
       }
@@ -272,12 +274,16 @@ function buildPetResultDiv(cat) {
   return petResultDiv;
 }
 
-$(document).on("click", ".mapItBtn", function(event) {
-  var finalAddress = $(event.target)
-    .prev()
-    .text();
+$(document).on("click", ".mapItBtn", function (event) {
+  var finalAddress = $(event.target).prev().text();
 
-  var URLpass = "map.html?address=" + finalAddress + "&longitude=" + Latlong.longitude + "&latitude=" + Latlong.latitude;
+  var URLpass =
+    "map.html?address=" +
+    finalAddress +
+    "&longitude=" +
+    Latlong.longitude +
+    "&latitude=" +
+    Latlong.latitude;
 
   window.open(URLpass, "_blank");
 });
