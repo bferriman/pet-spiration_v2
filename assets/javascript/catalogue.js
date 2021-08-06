@@ -124,19 +124,19 @@ function coatPreferred() {
   }
 }
 
-function colorsPreferred() {
-  let preferredColors = [];
+function getPreferences(attribute) {
+  let preferences = [];
   let currentMax = 0;
-  for (const color in likeCounts.color) {
-    let count = likeCounts.color[color];
+  for (const option in attribute) {
+    let count = attribute[option];
     if (count > currentMax) {
       currentMax = count;
-      preferredColors = [color];
+      preferences = [option];
     } else if (count === currentMax) {
-      preferredColors.push(color);
+      preferences.push(option);
     }
   }
-  return preferredColors;
+  return preferences;
 }
 
 // adds cats from categories the user has liked to the queue
@@ -154,6 +154,10 @@ function queueRelevantBlock() {
   console.log("Calico Cats Liked: " + likeCounts.color.calico);
   console.log("Siamese Cats Liked: " + likeCounts.color.siamese);
   console.log("Persian Cats Liked: " + likeCounts.color.persian);
+  console.log("Here comes the preferred colors...");
+  console.log(colorsPreferred());
+  console.log("Here it comes again!");
+  console.log(getPreferences(likeCounts.color));
 }
 
 function likeHandler() {
